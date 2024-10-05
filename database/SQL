@@ -1,0 +1,113 @@
+-- Drop the existing IntraConnect database if it exists
+DROP DATABASE IF EXISTS IntraConnect;
+
+-- Create a new database for the IntraConnect project
+CREATE DATABASE IntraConnect;
+
+-- Use the newly created database
+USE IntraConnect;
+
+-- Create a table for Departments
+CREATE TABLE IF NOT EXISTS departments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL UNIQUE,
+    description TEXT
+);
+
+-- Create a table for Employee Positions
+CREATE TABLE IF NOT EXISTS positions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    department_id INT,
+    seniority ENUM('junior', 'mid', 'expert', 'manager', 'director') NOT NULL,
+    FOREIGN KEY (department_id) REFERENCES departments(id) ON DELETE SET NULL
+);
+
+-- Create a table for Employees
+CREATE TABLE IF NOT EXISTS employees (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    position_id INT,
+    profile_picture VARCHAR(255),
+    FOREIGN KEY (position_id) REFERENCES positions(id) ON DELETE SET NULL
+);
+
+-- Create a table for Employee Contacts
+CREATE TABLE IF NOT EXISTS contacts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    employee_id INT,
+    phone_number VARCHAR(15),
+    email VARCHAR(100) NOT NULL UNIQUE,
+    linkedin VARCHAR(255),
+    workplace_profile VARCHAR(255),
+    FOREIGN KEY (employee_id) REFERENCES employees(id) ON DELETE CASCADE
+);
+
+-- Create a table for Company Cars
+CREATE TABLE IF NOT EXISTS company_cars (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    employee_id INT,
+    registration_number VARCHAR(20) NOT NULL UNIQUE,
+    model VARCHAR(100),
+    FOREIGN KEY (employee_id) REFERENCES employees(id) ON DELETE SET NULL
+);
+
+-- Insert data into departments
+INSERT INTO departments (name, description) VALUES
+('IT', 'Information Technology department'),
+('HR', 'Human Resources department'),
+('Sales', 'Sales department'),
+('Marketing', 'Marketing and Communications department'),
+('Finance', 'Finance and Accounting department'),
+('Operations', 'Operations and Logistics department');
+
+-- Insert data into positions
+INSERT INTO positions (title, department_id, seniority) VALUES
+('Developer', 1, 'mid'),
+('Manager', 2, 'mid'),
+('Analyst', 4, 'mid'),
+('Technician', 6, 'mid'),
+('Administrator', 6, 'mid'),
+('Junior Developer', 3, 'junior'),
+('Senior Administrator', 4, 'senior'),
+('Senior Administrator', 5, 'senior');
+
+-- Insert data into employees
+INSERT INTO employees (first_name, last_name, position_id, profile_picture) VALUES
+('Ivan', 'Knežević', 1, NULL),
+('Ivan', 'Matić', 1, NULL),
+('Ivana', 'Knežević', 3, NULL),
+('Ante', 'Matić', 2, NULL),
+('Ante', 'Marić', 4, NULL),
+('Lucija', 'Horvat', 1, NULL),
+('Josip', 'Matić', 5, NULL),
+('Marko', 'Horvat', 6, NULL),
+('Sara', 'Jurić', 7, NULL),
+('Sara', 'Kralj', 8, NULL);
+
+-- Insert data into contacts
+INSERT INTO contacts (employee_id, phone_number, email, linkedin, workplace_profile) VALUES
+(1, '+385 91 400 351', 'ivan.knezevic1@company.com', NULL, NULL),
+(2, '+385 91 400 632', 'ivan.matic1@company.com', NULL, NULL),
+(3, '+385 91 400 860', 'ivana.knezevic1@company.com', NULL, NULL),
+(4, '+385 91 400 209', 'ante.matic1@company.com', NULL, NULL),
+(5, '+385 91 400 248', 'ante.maric1@company.com', NULL, NULL),
+(6, '+385 91 400 660', 'lucija.horvat1@company.com', NULL, NULL),
+(7, '+385 91 400 991', 'josip.matic1@company.com', NULL, NULL),
+(8, '+385 91 400 296', 'marko.horvat1@company.com', NULL, NULL),
+(9, '+385 91 400 507', 'sara.juric1@company.com', NULL, NULL),
+(10, '+385 91 400 809', 'sara.kralj1@company.com', NULL, NULL);
+
+-- Insert data into company_cars
+INSERT INTO company_cars (employee_id, registration_number, model) VALUES
+(1, 'WA-539-LR', 'Tesla Model S'),
+(2, 'NK-519-PO', 'BMW X5'),
+(3, 'MG-192-EB', 'Audi A6'),
+(4, 'ES-805-AO', 'Mercedes-Benz C-Class'),
+(5, 'SK-255-JI', 'Volkswagen Golf'),
+(6, 'GT-759-KN', 'Ford Focus'),
+(7, 'BY-753-FE', 'Toyota Corolla'),
+(8, 'XN-515-XF', 'Honda Civic'),
+(9, 'DX-292-DM', 'Skoda Octavia'),
+(10, 'AX-970-PT', 'Renault Megane');
