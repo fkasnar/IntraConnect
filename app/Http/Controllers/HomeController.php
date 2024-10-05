@@ -8,6 +8,6 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return view('index'); // Return the view for your index page
+        return view('index'); // Ensure you have a view named 'index.blade.php' in resources/views
     }
 }
