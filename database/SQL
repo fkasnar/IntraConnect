@@ -1,0 +1,51 @@
+-- Create a database for the IntraConnect project
+CREATE DATABASE IntraConnect;
+
+-- Use the newly created database
+USE IntraConnect;
+
+-- Create a table for Departments
+CREATE TABLE departments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL UNIQUE,
+    description TEXT
+);
+
+-- Create a table for Employee Positions
+CREATE TABLE positions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(100) NOT NULL UNIQUE,
+    department_id INT,
+    seniority ENUM('junior', 'mid', 'expert', 'manager', 'director') NOT NULL,
+    FOREIGN KEY (department_id) REFERENCES departments(id) ON DELETE SET NULL
+);
+
+-- Create a table for Employees
+CREATE TABLE employees (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    position_id INT,
+    profile_picture VARCHAR(255),
+    FOREIGN KEY (position_id) REFERENCES positions(id) ON DELETE SET NULL
+);
+
+-- Create a table for Employee Contacts
+CREATE TABLE contacts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    employee_id INT,
+    phone_number VARCHAR(15),
+    email VARCHAR(100) NOT NULL UNIQUE,
+    linkedin VARCHAR(255),
+    workplace_profile VARCHAR(255),
+    FOREIGN KEY (employee_id) REFERENCES employees(id) ON DELETE CASCADE
+);
+
+-- Create a table for Company Cars
+CREATE TABLE company_cars (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    employee_id INT,
+    registration_number VARCHAR(20) NOT NULL UNIQUE,
+    model VARCHAR(100),
+    FOREIGN KEY (employee_id) REFERENCES employees(id) ON DELETE SET NULL
+);
