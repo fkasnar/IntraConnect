@@ -1,48 +1,30 @@
-<<<<<<< HEAD
 -- Drop the existing IntraConnect database if it exists
 DROP DATABASE IF EXISTS IntraConnect;
 
 -- Create a new database for the IntraConnect project
-=======
--- Create a database for the IntraConnect project
->>>>>>> 4d19dab (setting up environment)
 CREATE DATABASE IntraConnect;
 
 -- Use the newly created database
 USE IntraConnect;
 
 -- Create a table for Departments
-<<<<<<< HEAD
 CREATE TABLE IF NOT EXISTS departments (
-=======
-CREATE TABLE departments (
->>>>>>> 4d19dab (setting up environment)
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL UNIQUE,
     description TEXT
 );
 
 -- Create a table for Employee Positions
-<<<<<<< HEAD
 CREATE TABLE IF NOT EXISTS positions (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(100) NOT NULL,
-=======
-CREATE TABLE positions (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(100) NOT NULL UNIQUE,
->>>>>>> 4d19dab (setting up environment)
     department_id INT,
     seniority ENUM('junior', 'mid', 'expert', 'manager', 'director') NOT NULL,
     FOREIGN KEY (department_id) REFERENCES departments(id) ON DELETE SET NULL
 );
 
 -- Create a table for Employees
-<<<<<<< HEAD
 CREATE TABLE IF NOT EXISTS employees (
-=======
-CREATE TABLE employees (
->>>>>>> 4d19dab (setting up environment)
     id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
@@ -52,11 +34,7 @@ CREATE TABLE employees (
 );
 
 -- Create a table for Employee Contacts
-<<<<<<< HEAD
 CREATE TABLE IF NOT EXISTS contacts (
-=======
-CREATE TABLE contacts (
->>>>>>> 4d19dab (setting up environment)
     id INT AUTO_INCREMENT PRIMARY KEY,
     employee_id INT,
     phone_number VARCHAR(15),
@@ -67,17 +45,12 @@ CREATE TABLE contacts (
 );
 
 -- Create a table for Company Cars
-<<<<<<< HEAD
 CREATE TABLE IF NOT EXISTS company_cars (
-=======
-CREATE TABLE company_cars (
->>>>>>> 4d19dab (setting up environment)
     id INT AUTO_INCREMENT PRIMARY KEY,
     employee_id INT,
     registration_number VARCHAR(20) NOT NULL UNIQUE,
     model VARCHAR(100),
     FOREIGN KEY (employee_id) REFERENCES employees(id) ON DELETE SET NULL
-<<<<<<< HEAD
 );
 
 -- Insert data into departments
@@ -138,6 +111,3 @@ INSERT INTO company_cars (employee_id, registration_number, model) VALUES
 (8, 'XN-515-XF', 'Honda Civic'),
 (9, 'DX-292-DM', 'Skoda Octavia'),
 (10, 'AX-970-PT', 'Renault Megane');
-=======
-);
->>>>>>> 4d19dab (setting up environment)
